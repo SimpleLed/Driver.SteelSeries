@@ -324,7 +324,13 @@ namespace SteelSeriesSLSProvider
                 SupportsPush = true,
                 IsSource = false,
                 SupportsPull = false,
-                Id = Guid.Parse("b9440d02-8ca3-4e35-a9a3-88b024cc0e2d")
+                Id = Guid.Parse("996534cc-d81f-4fbb-b49e-7bfd6449dae9"),
+                Author = "mad ninja",
+                Blurb = "Work in progress driver for Steel Series devices",
+                CurrentVersion = new ReleaseNumber(0,0,0,3),
+                GitHubLink = "https://github.com/SimpleLed/Driver.SteelSeries",
+                IsPublicRelease = false,
+                
             };
         }
 
