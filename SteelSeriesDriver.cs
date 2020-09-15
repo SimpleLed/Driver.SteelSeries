@@ -327,7 +327,7 @@ namespace SteelSeriesSLSProvider
                 Id = Guid.Parse("996534cc-d81f-4fbb-b49e-7bfd6449dae9"),
                 Author = "mad ninja",
                 Blurb = "Work in progress driver for Steel Series devices",
-                CurrentVersion = new ReleaseNumber(0,0,0,4),
+                CurrentVersion = new ReleaseNumber(0,0,0,5),
                 GitHubLink = "https://github.com/SimpleLed/Driver.SteelSeries",
                 IsPublicRelease = false,
                 
