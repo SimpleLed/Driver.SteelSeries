@@ -209,7 +209,7 @@ namespace SteelSeriesSLSProvider
                         numberOfLeds = hids.Count;
                         */
 
-                        
+                        numberOfLeds = 122;
                     }
 
 
