@@ -60,19 +60,25 @@ namespace SteelSeriesSLSProvider
 
         private static List<SteelSeriesHIDDevice> HIDDevices = new List<SteelSeriesHIDDevice>
         {
-            new SteelSeriesHIDDevice( 0x1250 , "SteelSeries Arctis 5 Game", DeviceTypes.Headset ,1,"arctis5"),
-            new SteelSeriesHIDDevice( 0x1251 , "SteelSeries Arctis 5 Game - Dota 2 edition", DeviceTypes.Headset ,1,"arctis5"),
-            new SteelSeriesHIDDevice( 0x1252 , "SteelSeries Arctis Pro Game", DeviceTypes.Headset ,1,"arctis5"),
+            new SteelSeriesHIDDevice(0x1250, "SteelSeries Arctis 5 Game", DeviceTypes.Headset, 1,"arctis5"),
+            new SteelSeriesHIDDevice(0x1251, "SteelSeries Arctis 5 Game - Dota 2 edition", DeviceTypes.Headset, 1, "arctis5"),
+            new SteelSeriesHIDDevice(0x1252, "SteelSeries Arctis Pro Game", DeviceTypes.Headset, 1, "arctis5"),
             new SteelSeriesHIDDevice(0x1260, "Arctis 7 Game", DeviceTypes.Headset, 0,"arctis7"),
-            new SteelSeriesHIDDevice(0x1290, "Arctis Pro Wireless", DeviceTypes.Headset, 0,"arctispro"),
-            new SteelSeriesHIDDevice(0x1294, "Arctis Pro Wireless Game", DeviceTypes.Headset, 0,"arctispro"),
-            new SteelSeriesHIDDevice(0x12A8, "Arctis 5 Game - PUBG edition", DeviceTypes.Headset, 1,"arctis5"),
-            new SteelSeriesHIDDevice(0x12AA, "Arctis 5 Game - 2018 edition", DeviceTypes.Headset, 1,"arctis5"),
-            new SteelSeriesHIDDevice(0x12AD, "Arctis 7 Game - 2018 edition", DeviceTypes.Headset, 1,"arctis7"),
+            new SteelSeriesHIDDevice(0x1290, "Arctis Pro Wireless", DeviceTypes.Headset, 0, "arctispro"),
+            new SteelSeriesHIDDevice(0x1294, "Arctis Pro Wireless Game", DeviceTypes.Headset, 0, "arctispro"),
+            new SteelSeriesHIDDevice(0x12A8, "Arctis 5 Game - PUBG edition", DeviceTypes.Headset, 1, "arctis5"),
+            new SteelSeriesHIDDevice(0x12AA, "Arctis 5 Game - 2018 edition", DeviceTypes.Headset, 1, "arctis5"),
+            new SteelSeriesHIDDevice(0x12AD, "Arctis 7 Game - 2018 edition", DeviceTypes.Headset, 1, "arctis7"),
             
-            new SteelSeriesHIDDevice(0x1618, "APEX 7 TKL", DeviceTypes.Keyboard, 84,"apex7tkl"),
+            new SteelSeriesHIDDevice(0x161C, "Apex 5", DeviceTypes.Keyboard, 104, "apex5"),
+            new SteelSeriesHIDDevice(0x1612, "Apex 7", DeviceTypes.Keyboard, 104, "apex7"),
+            new SteelSeriesHIDDevice(0x1618, "APEX 7 TKL", DeviceTypes.Keyboard, 84, "apex7tkl"),
+            new SteelSeriesHIDDevice(0x1616, "Apex M750", DeviceTypes.Keyboard, 104, "apexm750"),
 
-            new SteelSeriesHIDDevice(0x1824, "Rival 3",DeviceTypes.Mouse,3,"rival3")
+            new SteelSeriesHIDDevice(0x1824, "Rival 3", DeviceTypes.Mouse, 3, "rival3"),
+            new SteelSeriesHIDDevice(0x1724, "Rival 600", DeviceTypes.Mouse, 8, "rival600"),
+            new SteelSeriesHIDDevice(0x170E, "Rival 500", DeviceTypes.Mouse, 2, "rival500"),
+            new SteelSeriesHIDDevice(0x1720, "Rival 310", DeviceTypes.Mouse, 2, "rival310"),
         };
 
         public SteelSeries.GameSenseSDK.GameSenseSDK GameSenseSdk = new GameSenseSDK();
@@ -203,7 +209,7 @@ namespace SteelSeriesSLSProvider
                         numberOfLeds = hids.Count;
                         */
 
-                        numberOfLeds = 122;
+                        
                     }
 
 
