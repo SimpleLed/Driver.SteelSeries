@@ -31,14 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HidSharp, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\HidSharp.2.1.0\lib\net35\HidSharp.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleLed, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\SimpleLed.1.0.8\lib\net472\SimpleLed.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -74,7 +68,30 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="arctis5.png" />
+    <Resource Include="arctis5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Interface\SimpleLed\SimpleLed.csproj">
+      <Project>{eb4729f4-0bf6-41d3-9548-f8c7846a2025}</Project>
+      <Name>SimpleLed</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Apex3.png" />
+    <Resource Include="Apex5.png" />
+    <Resource Include="Apex7.png" />
+    <Resource Include="Apex7TKL.png" />
+    <Resource Include="ApexPro.png" />
+    <Resource Include="ApexProTKL.png" />
+    <Resource Include="Arctis5White.png" />
+    <Resource Include="ArctisPro.png" />
+    <Resource Include="Rival3.png" />
+    <Resource Include="Rival500.png" />
+    <Resource Include="Rival600.png" />
+    <Resource Include="Rival650.png" />
+    <Resource Include="Rival710.png" />
+    <Resource Include="Sensei310.png" />
+    <Resource Include="SenseiTen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

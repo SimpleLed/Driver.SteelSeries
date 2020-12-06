@@ -4,11 +4,14 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using SimpleLed;
+using SteelSeriesSLSProvider.Model;
 
 namespace SteelSeries.GameSenseSDK
 {
@@ -50,10 +53,42 @@ namespace SteelSeries.GameSenseSDK
         private String sseGameName = "SSGESSL";
         private String sseGameDisplayname = "SimpleLED Driver";
 
-        private static String sseAddress = "";
+     
 
+        private const string EVENT_NAME = "UPDATELEDS";
+        private static readonly string HANDLER = $@"(define (getZone x)
+  (case x
+    {string.Join(Environment.NewLine, Enum.GetValues(typeof(SteelSeriesLedId))
+            .Cast<SteelSeriesLedId>()
+            .Select(x => x.GetAPIName())
+            .Select(ledId => $"    ((\"{ledId}\") {ledId}:)"))}
+  ))
+(handler ""{EVENT_NAME}""
+  (lambda (data)
+    (let* ((device (value: data))
+           (zones (zones: data))
+           (colors (colors: data)))
+      (on-device device show-on-zones: colors (map (lambda (x) (getZone x)) zones)))))
+(add-event-per-key-zone-use ""{EVENT_NAME}"" ""all"")
+(add-event-zone-use-with-specifier ""{EVENT_NAME}"" ""all"" ""rgb-1-zone"")
+(add-event-zone-use-with-specifier ""{EVENT_NAME}"" ""all"" ""rgb-2-zone"")
+(add-event-zone-use-with-specifier ""{EVENT_NAME}"" ""all"" ""rgb-3-zone"")
+(add-event-zone-use-with-specifier ""{EVENT_NAME}"" ""all"" ""rgb-4-zone"")
+(add-event-zone-use-with-specifier ""{EVENT_NAME}"" ""all"" ""rgb-5-zone"")
+(add-event-zone-use-with-specifier ""{EVENT_NAME}"" ""all"" ""rgb-6-zone"")
+(add-event-zone-use-with-specifier ""{EVENT_NAME}"" ""all"" ""rgb-7-zone"")
+(add-event-zone-use-with-specifier ""{EVENT_NAME}"" ""all"" ""rgb-8-zone"")
+(add-event-zone-use-with-specifier ""{EVENT_NAME}"" ""all"" ""rgb-12-zone"")
+(add-event-zone-use-with-specifier ""{EVENT_NAME}"" ""all"" ""rgb-17-zone"")
+(add-event-zone-use-with-specifier ""{EVENT_NAME}"" ""all"" ""rgb-24-zone"")
+(add-event-zone-use-with-specifier ""{EVENT_NAME}"" ""all"" ""rgb-103-zone"")";
+
+        private static String sseAddress = "";
+        private Game _game;
         public void init(String sseGameName, String sseGameDisplayname, byte iconColorID)
         {
+            _game = new Game(sseGameName, sseGameDisplayname);
+            _event = new Event(_game, EVENT_NAME);
             Console.WriteLine("Loading Props: "+ COREPROPS_JSON_PATH);
             if (!File.Exists(COREPROPS_JSON_PATH))
                 throw new FileNotFoundException($"Core Props file could not be found at \"{COREPROPS_JSON_PATH}\"");
@@ -98,7 +133,14 @@ namespace SteelSeries.GameSenseSDK
             sendColor("mouselogo", red, green, blue, payload);
         }
 
-        public void setHeadsetColor(byte red, byte green, byte blue, GameSensePayloadPeripheryColorEventJSON payload)
+
+
+        public void setHeadsetColor(byte red, byte green, byte blue, byte red2, byte green2, byte blue2, GameSensePayloadPeripheryColorEventJSON payload)
+        {
+            sendColor("rgb-2-zone", red, green, blue, payload);
+        }
+
+        public void setHeadse2tColor(byte red, byte green, byte blue, GameSensePayloadPeripheryColorEventJSON payload)
         {
             sendColor("headset", red, green, blue, payload);
         }
@@ -178,6 +220,7 @@ namespace SteelSeries.GameSenseSDK
             sendPostRequest("http://" + sseAddress + "/game_heartbeat", json);
         }
 
+        internal string _baseUrl => "http://" + sseAddress;
         public void sendStop()
         {
             GameSensePayloadPeripheryColorEventJSON payload = new GameSensePayloadPeripheryColorEventJSON();
@@ -188,73 +231,38 @@ namespace SteelSeries.GameSenseSDK
             sendPostRequest("http://" + sseAddress + "/game_event", json);
         }
 
+
+        private static readonly HttpClient _client = new HttpClient();
+        private string PostJson(string urlSuffix, object o)
+        {
+            string payload = JsonConvert.SerializeObject(o);
+            return _client.PostAsync(_baseUrl + urlSuffix, new StringContent(payload, Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync().Result;
+        }
+
+
+        internal void UpdateLeds(string device, Dictionary<string, int[]> data)
+        {
+            _event.Data.Clear();
+            _event.Data.Add("value", device);
+            _event.Data.Add("colors", data.Values.ToList());
+            _event.Data.Add("zones", data.Keys.ToList());
+
+            TriggerEvent(_event);
+        }
+
+        private Event _event=null;
+        private string TriggerEvent(Event e) => PostJson("/game_event", e);
+        private string RegisterGoLispHandler(GoLispHandler handler) => PostJson("/load_golisp_handlers", handler);
+        private string RegisterEvent(Event e) => PostJson("/register_game_event", e);
+        private string UnregisterEvent(Event e) => PostJson("/remove_game_event", e);
+        private string RegisterGame(Game game) => PostJson("/game_metadata", game);
+        private string UnregisterGame(Game game) => PostJson("/remove_game", game);
+        private string StopGame(Game game) => PostJson("/stop_game", game);
+        private string SendHeartbeat(Game game) => PostJson("/game_heartbeat", game);
+
         private void setupLISPHandlers()
         {
-            String json = "";
-            GameSensePayloadLISPHandlerJSON payload = new GameSensePayloadLISPHandlerJSON();
-            payload.game = sseGameName;
-
-            // sending POST requests with golisp handler
-            payload.golisp = @"
-(handler ""COLOR""
-    (lambda (data)
-        (when (keyboard:? data)
-            (let* ((keyboard (keyboard: data))
-                   (hids (hids: keyboard))
-                   (colors (colors: keyboard)))
-                (on-device ""rgb-per-key-zones"" show-on-keys: hids colors)))
-        (when (periph:? data)
-            (let* ((periph (periph: data))
-                   (color (color: periph)))
-                (on-device ""rgb-1-zone"" show: color)
-                (on-device ""rgb-2-zone"" show: color)
-                (on-device ""rgb-3-zone"" show: color)
-                (on-device ""rgb-4-zone"" show: color)
-                (on-device ""rgb-5-zone"" show: color)
-                (on-device ""rgb-12-zone"" show: color)))
-        (when (mousepad:? data)
-            (let* ((mousepad (mousepad: data))
-                    (colors (colors: mousepad)))
-                (on-device ""rgb-12-zone"" show-on-zones: colors '(one: two: three: four: five: six: seven: eight: nine: ten: eleven: twelve:))))
-        (when (mousepadtwozone:? data)
-            (let* ((mousepadtwozone (mousepadtwozone: data))
-                    (mpone (mpone: mousepadtwozone))
-                    (mptwo (mptwo: mousepadtwozone)))
-                (on-device ""indicator"" show-on-zone: mpone one:)
-                (on-device ""indicator"" show-on-zone: mptwo two:)))
-        (when (mouse:? data)
-            (let* ((mouse (mouse: data))
-                   (color (color: mouse)))
-                (on-device ""mouse"" show: color)))
-        (when (mousewheel:? data)
-            (let* ((mousewheel (mousewheel: data))
-                   (color (color: mousewheel)))
-                (on-device ""mouse"" show-on-zone: color wheel:)))
-        (when (mouselogo:? data)
-            (let* ((mouselogo (mouselogo: data))
-                   (color (color: mouselogo)))
-                (on-device ""mouse"" show-on-zone: color logo:)))
-        (when (headset:? data)
-            (let* ((headset (headset: data))
-                   (color (color: headset)))
-                (on-device ""headset"" show-on-zone: color earcups:)))
-    )
-)
-(add-event-zone-use-with-specifier ""COLOR"" ""all"" ""rgb-1-zone"")
-(add-event-zone-use-with-specifier ""COLOR"" ""all"" ""rgb-2-zone"")
-(add-event-zone-use-with-specifier ""COLOR"" ""all"" ""rgb-3-zone"")
-(add-event-zone-use-with-specifier ""COLOR"" ""all"" ""rgb-4-zone"")
-(add-event-zone-use-with-specifier ""COLOR"" ""all"" ""rgb-5-zone"")
-(add-event-zone-use-with-specifier ""COLOR"" ""all"" ""rgb-12-zone"")
-(add-event-per-key-zone-use ""COLOR"" ""all"")
-";
-            json = JsonConvert.SerializeObject(payload);
-            sendPostRequest("http://" + sseAddress + "/load_golisp_handlers", json);
-
-            /*payload.golisp = "(handler \"STOP\" (lambda (data)    (send Generic-Initializer deinitialize:)))";
-            // sending POST request
-            json = JsonConvert.SerializeObject(payload);
-            sendPostRequest("http://" + sseAddress + "/load_golisp_handlers", json);*/
+            RegisterGoLispHandler(new GoLispHandler(_game, HANDLER));
         }
 
         private void setupGame(byte iconColorID)
@@ -270,20 +278,27 @@ namespace SteelSeries.GameSenseSDK
 
         private void sendPostRequest(String address, String payload)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(address);
-            httpWebRequest.ReadWriteTimeout = 30;
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
+            try
+            {
+                var httpWebRequest = (HttpWebRequest) WebRequest.Create(address);
+                httpWebRequest.ReadWriteTimeout = 30;
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
 
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                streamWriter.Write(payload);
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    streamWriter.Write(payload);
+                }
+
+                // sending POST request
+                var httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    streamReader.ReadToEnd();
+                }
             }
-            // sending POST request
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            catch
             {
-                streamReader.ReadToEnd();
             }
         }
 
