@@ -78,20 +78,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Apex3.png" />
-    <Resource Include="Apex5.png" />
-    <Resource Include="Apex7.png" />
-    <Resource Include="Apex7TKL.png" />
     <Resource Include="ApexPro.png" />
     <Resource Include="ApexProTKL.png" />
     <Resource Include="Arctis5White.png" />
     <Resource Include="ArctisPro.png" />
-    <Resource Include="Rival3.png" />
     <Resource Include="Rival500.png" />
-    <Resource Include="Rival600.png" />
     <Resource Include="Rival650.png" />
     <Resource Include="Rival710.png" />
     <Resource Include="Sensei310.png" />
     <Resource Include="SenseiTen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Aerox3.png" />
+    <Content Include="ApexM750.png" />
+    <Content Include="ApexM800.png" />
+    <Content Include="Rival100.png" />
+    <Content Include="Rival3.png" />
+    <Content Include="Rival300.png" />
+    <Content Include="Rival310.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
