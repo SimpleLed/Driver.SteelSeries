@@ -65,24 +65,38 @@ namespace SteelSeriesSLSProvider
 
         private static List<SteelSeriesHIDDevice> HIDDevices = new List<SteelSeriesHIDDevice>
         {
-            new SteelSeriesHIDDevice( 0x1250 , "SteelSeries Arctis 5 Game", DeviceTypes.Headset ,2,"arctis5", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
-            new SteelSeriesHIDDevice( 0x1251 , "SteelSeries Arctis 5 Game - Dota 2 edition", DeviceTypes.Headset ,2,"arctis5", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
-            new SteelSeriesHIDDevice( 0x1252 , "SteelSeries Arctis Pro Game", DeviceTypes.Headset ,2,"arctis5", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
-            new SteelSeriesHIDDevice(0x1260, "Arctis 7 Game", DeviceTypes.Headset, 0,"arctis7", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
-            new SteelSeriesHIDDevice(0x1290, "Arctis Pro Wireless", DeviceTypes.Headset, 0,"arctispro", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
-            new SteelSeriesHIDDevice(0x1294, "Arctis Pro Wireless Game", DeviceTypes.Headset, 0,"arctispro", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
-            new SteelSeriesHIDDevice(0x12A8, "Arctis 5 Game - PUBG edition", DeviceTypes.Headset, 2,"arctis5", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
-            new SteelSeriesHIDDevice(0x12AA, "Arctis 5 Game - 2018 edition", DeviceTypes.Headset, 2,"arctis5", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
-            new SteelSeriesHIDDevice(0x12AD, "Arctis 7 Game - 2018 edition", DeviceTypes.Headset, 2,"arctis7", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
+            new SteelSeriesHIDDevice(0x1836, "Aerox 3", DeviceTypes.Mouse, 3, "Aerox3", SteelSeriesDeviceType.ThreeZone, RGBNetGubbins.MOUSE_THREE_ZONE),
+            new SteelSeriesHIDDevice(0x183A, "Aerox 3 Wireless", DeviceTypes.Mouse, 3, "Aerox3", SteelSeriesDeviceType.ThreeZone, RGBNetGubbins.MOUSE_THREE_ZONE),
+            new SteelSeriesHIDDevice(0x1702, "Rival 100", DeviceTypes.Mouse, 1, "Rival100", SteelSeriesDeviceType.OneZone, RGBNetGubbins.MOUSE_ONE_ZONE),
+            new SteelSeriesHIDDevice(0x1814, "Rival 105", DeviceTypes.Mouse, 1, "Rival100", SteelSeriesDeviceType.OneZone, RGBNetGubbins.MOUSE_ONE_ZONE),
+            new SteelSeriesHIDDevice(0x1816, "Rival 106", DeviceTypes.Mouse, 1, "Rival100", SteelSeriesDeviceType.OneZone, RGBNetGubbins.MOUSE_ONE_ZONE),
+            new SteelSeriesHIDDevice(0x1729, "Rival 110", DeviceTypes.Mouse, 1, "Rival100", SteelSeriesDeviceType.OneZone, RGBNetGubbins.MOUSE_ONE_ZONE),
+            new SteelSeriesHIDDevice(0x0472, "Rival 150", DeviceTypes.Mouse, 1, "Rival100", SteelSeriesDeviceType.OneZone, RGBNetGubbins.MOUSE_ONE_ZONE),
+            new SteelSeriesHIDDevice(0x1710, "Rival 300", DeviceTypes.Mouse, 2, "Rival300", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.MOUSE_TWO_ZONE),
+            new SteelSeriesHIDDevice(0x1720, "Rival 310", DeviceTypes.Mouse, 2, "Rival310", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.MOUSE_TWO_ZONE),
+            new SteelSeriesHIDDevice(0x170E, "Rival 500", DeviceTypes.Mouse, 2, "Rival500", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.MOUSE_TWO_ZONE),
+            new SteelSeriesHIDDevice(0x1724, "Rival 600", DeviceTypes.Mouse, 8, "Rival650", SteelSeriesDeviceType.EightZone, RGBNetGubbins.MOUSE_EIGHT_ZONE),
+            new SteelSeriesHIDDevice(0x1700, "Rival 700", DeviceTypes.Mouse, 2, "Rival710", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.MOUSE_TWO_ZONE),
+            new SteelSeriesHIDDevice(0x1824, "Rival 3 (Old Firmware)", DeviceTypes.Mouse, 3, "Rival3", SteelSeriesDeviceType.ThreeZone, RGBNetGubbins.MOUSE_THREE_ZONE),
+            new SteelSeriesHIDDevice(0x184C, "Rival 3", DeviceTypes.Mouse, 3, "Rival3", SteelSeriesDeviceType.ThreeZone, RGBNetGubbins.MOUSE_THREE_ZONE),
+            new SteelSeriesHIDDevice(0x1830, "Rival 3 Wireless", DeviceTypes.Mouse, 3, "Rival3", SteelSeriesDeviceType.ThreeZone, RGBNetGubbins.MOUSE_THREE_ZONE),
+            new SteelSeriesHIDDevice(0x1832, "Sensei Ten", DeviceTypes.Mouse, 2, "SenseiTen", SteelSeriesDeviceType.ThreeZone, RGBNetGubbins.MOUSE_TWO_ZONE),
 
-            new SteelSeriesHIDDevice(0x1618, "APEX 7 TKL", DeviceTypes.Keyboard, RGBNetGubbins.KEYBOARD_TKL_MAPPING_UK.Count,"apex7tkl", SteelSeriesDeviceType.PerKey, RGBNetGubbins.KEYBOARD_TKL_MAPPING_UK),
-            new SteelSeriesHIDDevice(0x161C, "APEX 5", DeviceTypes.Keyboard, RGBNetGubbins.KEYBOARD_MAPPING_UK.Count,"apex7tkl", SteelSeriesDeviceType.PerKey, RGBNetGubbins.KEYBOARD_MAPPING_UK),
-            new SteelSeriesHIDDevice(0x1612, "APEX 7", DeviceTypes.Keyboard, RGBNetGubbins.KEYBOARD_MAPPING_UK.Count,"apex7tkl", SteelSeriesDeviceType.PerKey, RGBNetGubbins.KEYBOARD_MAPPING_UK),
-            new SteelSeriesHIDDevice(0x0616, "APEX M750", DeviceTypes.Keyboard, RGBNetGubbins.KEYBOARD_MAPPING_UK.Count,"apex7tkl", SteelSeriesDeviceType.PerKey, RGBNetGubbins.KEYBOARD_MAPPING_UK),
+            //Keyboards
+            new SteelSeriesHIDDevice(0x161C, "APEX 5", DeviceTypes.Keyboard, RGBNetGubbins.KEYBOARD_MAPPING_UK.Count,"ApexPro", SteelSeriesDeviceType.PerKey, RGBNetGubbins.KEYBOARD_MAPPING_UK),
+            new SteelSeriesHIDDevice(0x1612, "Apex 7", DeviceTypes.Keyboard, RGBNetGubbins.KEYBOARD_MAPPING_UK.Count, "ApexPro", SteelSeriesDeviceType.PerKey, RGBNetGubbins.KEYBOARD_MAPPING_UK),
+            new SteelSeriesHIDDevice(0x1618, "Apex 7 TKL", DeviceTypes.Keyboard, RGBNetGubbins.KEYBOARD_TKL_MAPPING_UK.Count, "ApexProTKL", SteelSeriesDeviceType.PerKey, RGBNetGubbins.KEYBOARD_TKL_MAPPING_UK),
+            new SteelSeriesHIDDevice(0x1616, "Apex M750", DeviceTypes.Keyboard, RGBNetGubbins.KEYBOARD_MAPPING_UK.Count, "ApexM750", SteelSeriesDeviceType.PerKey, RGBNetGubbins.KEYBOARD_MAPPING_UK),
+            new SteelSeriesHIDDevice(0x1600, "Apex M800", DeviceTypes.Keyboard, RGBNetGubbins.KEYBOARD_MAPPING_UK.Count, "ApexM800", SteelSeriesDeviceType.PerKey, RGBNetGubbins.KEYBOARD_MAPPING_UK),
+            new SteelSeriesHIDDevice(0x1610, "Apex Pro", DeviceTypes.Keyboard, RGBNetGubbins.KEYBOARD_MAPPING_UK.Count, "ApexPro", SteelSeriesDeviceType.PerKey, RGBNetGubbins.KEYBOARD_MAPPING_UK),
+            new SteelSeriesHIDDevice(0x1614, "Apex Pro TKL", DeviceTypes.Keyboard, RGBNetGubbins.KEYBOARD_TKL_MAPPING_UK.Count, "ApexProTKL", SteelSeriesDeviceType.PerKey, RGBNetGubbins.KEYBOARD_TKL_MAPPING_UK),
 
-            new SteelSeriesHIDDevice(0x1824, "Rival 3",DeviceTypes.Mouse,3,"rival3", SteelSeriesDeviceType.ThreeZone, RGBNetGubbins.MOUSE_THREE_ZONE),
-            new SteelSeriesHIDDevice(0x170E, "Rival 500", DeviceTypes.Mouse,2,"rival500", SteelSeriesDeviceType.Mouse, RGBNetGubbins.MOUSE_TWO_ZONE),
-            new SteelSeriesHIDDevice(0x184C, "Rival 3", DeviceTypes.Mouse,3,"rival3", SteelSeriesDeviceType.ThreeZone, RGBNetGubbins.MOUSE_THREE_ZONE)
+            //Headsets
+            new SteelSeriesHIDDevice(0x12AA, "Arctis 5", DeviceTypes.Headset, 2, "Arctis5White", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
+            new SteelSeriesHIDDevice(0x1250, "Arctis 5 Game", DeviceTypes.Headset, 2, "Arctis5White", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
+            new SteelSeriesHIDDevice(0x1251, "Arctis 5 - Dota 2 Edition", DeviceTypes.Headset, 2, "Arctis5White", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
+            new SteelSeriesHIDDevice(0x12A8, "Arctis 5 - PUBG Edition", DeviceTypes.Headset, 2, "Arctis5White", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
+            new SteelSeriesHIDDevice(0x1252, "Arctis Pro Game", DeviceTypes.Headset, 2, "ArctisPro", SteelSeriesDeviceType.TwoZone, RGBNetGubbins.HEADSET_TWO_ZONE),
         };
 
         public SteelSeries.GameSenseSDK.GameSenseSDK GameSenseSdk = new GameSenseSDK();
@@ -210,7 +224,7 @@ namespace SteelSeriesSLSProvider
                 Id = Guid.Parse("996534cc-d81f-4fbb-b49e-7bfd6449dae9"),
                 Author = "mad ninja",
                 Blurb = "Work in progress driver for Steel Series devices",
-                CurrentVersion = new ReleaseNumber(0, 0, 0, 10),
+                CurrentVersion = new ReleaseNumber(0, 0, 0, 11),
                 GitHubLink = "https://github.com/SimpleLed/Driver.SteelSeries",
                 IsPublicRelease = false,
                 SupportedDevices = HIDDevices.Select(x => new USBDevice()
@@ -506,6 +520,11 @@ namespace SteelSeriesSLSProvider
             { LedId.Keyboard_ArrowLeft, SteelSeriesLedId.LeftArrow },
             { LedId.Keyboard_ArrowDown, SteelSeriesLedId.DownArrow },
             { LedId.Keyboard_ArrowRight, SteelSeriesLedId.RightArrow }
+        };
+
+        internal static readonly Dictionary<LedId, SteelSeriesLedId> MOUSE_ONE_ZONE = new Dictionary<LedId, SteelSeriesLedId>
+        {
+            {LedId.Mouse1, SteelSeriesLedId.ZoneOne}
         };
 
     internal static readonly Dictionary<LedId, SteelSeriesLedId> MOUSE_TWO_ZONE = new Dictionary<LedId, SteelSeriesLedId>
